@@ -29,120 +29,63 @@ import project_1 from "../assets/images/project-1.jpg";
 // import project_2 from "../assets/images/project-2.jpg";
 
 function VideoPlanets() {
+  // const [videoSource, setMainVideoSource] = useState(null);
   const [buttonVis, setButtonVis] = useState("");
   const [mainVideoSource, setMainVideoSource] = useState(idlePlanets);
   const [isLoop, setIsLoop] = useState(false);
+  // const [isMain, setIsMain] = useState(true);
 
-  const [videoSource, setVideoSource] = useState({
-    idlePlanets: {
-      isVisible: true,
-      src: idlePlanets,
-    },
-    solutionsForward: {
-      isVisible: false,
-      src: solutionsForward,
-    },
-    solutionsBack: {
-      isVisible: false,
-      src: solutionsBack,
-    },
-    solutionsIdle: {
-      isVisible: false,
-      src: solutionsIdle,
-    },
-    aboutUsBack: {
-      isVisible: false,
-      src: aboutUsBack,
-    },
-    aboutUsForward: {
-      isVisible: false,
-      src: aboutUsForward,
-    },
-    aboutusIdle: {
-      isVisible: false,
-      src: aboutusIdle,
-    },
-    aidiaBack: {
-      isVisible: false,
-      src: aidiaBack,
-    },
-    aidiaForward: {
-      isVisible: false,
-      src: aidiaForward,
-    },
-    aidiaIdle: {
-      isVisible: false,
-      src: aidiaIdle,
-    },
-    projectForward: {
-      isVisible: false,
-      src: projectForward,
-    },
-    projectsBack: {
-      isVisible: false,
-      src: projectsBack,
-    },
-    projectsIdle: {
-      isVisible: false,
-      src: projectsIdle,
-    },
-  });
+  // const handleVideoEnded = () => {
+  //   setVideoSource(solutionsIdle);
 
-  const createNewSource = (key) => {
-    setMainVideoSource(key);
-    return Object.keys(videoSource).reduce((sources, source) => {
-      sources[source] = {
-        ...videoSource[source],
-        isVisible: source == key,
-      };
-      return sources;
-    }, {});
-  };
+  //   console.log("video is ended");
+  // };
 
   function goPlanet(e) {
+    console.log(e.target.value);
     switch (e.target.value) {
       case "solutions":
         return (
-          setVideoSource(createNewSource("solutionsForward")),
+          setMainVideoSource(solutionsForward),
           setButtonVis("d-none"),
           setTimeout(() => {
-            setVideoSource(createNewSource("solutionsIdle"));
+            setMainVideoSource(solutionsIdle);
             setIsLoop(true);
           }, 3905)
         );
       case "projects":
         return (
-          setVideoSource(createNewSource("projectForward")),
+          setMainVideoSource(projectForward),
           setButtonVis("d-none"),
           setTimeout(() => {
-            setVideoSource(createNewSource("projectsIdle"));
+            setMainVideoSource(projectsIdle);
             setIsLoop(true);
           }, 3700)
         );
       case "aboutUs":
         return (
-          setVideoSource(createNewSource("aboutUsForward")),
+          setMainVideoSource(aboutUsForward),
           setButtonVis("d-none"),
           setTimeout(() => {
-            setVideoSource(createNewSource("aboutusIdle"));
+            setMainVideoSource(aboutusIdle);
             setIsLoop(true);
           }, 3700)
         );
       case "aidia":
         return (
-          setVideoSource(createNewSource("aidiaForward")),
+          setMainVideoSource(aidiaForward),
           setButtonVis("d-none"),
           setTimeout(() => {
-            setVideoSource(createNewSource("aidiaIdle"));
+            setMainVideoSource(aidiaIdle);
             setIsLoop(true);
           }, 2700)
         );
       case "backToHomefromSolutions":
         return (
-          setVideoSource(createNewSource("solutionsBack")),
+          setMainVideoSource(solutionsBack),
           setIsLoop(false),
           setTimeout(() => {
-            setVideoSource(createNewSource("idlePlanets"));
+            setMainVideoSource(idlePlanets);
             setIsLoop(true);
             setButtonVis("");
           }, 3900)
@@ -150,9 +93,9 @@ function VideoPlanets() {
       case "backToHomefromAidia":
         return (
           setIsLoop(false),
-          setVideoSource(createNewSource("aidiaBack")),
+          setMainVideoSource(aidiaBack),
           setTimeout(() => {
-            setVideoSource(createNewSource("idlePlanets"));
+            setMainVideoSource(idlePlanets);
             setIsLoop(true);
             setButtonVis("");
           }, 3905)
@@ -160,9 +103,9 @@ function VideoPlanets() {
       case "backToHomefromProjects":
         return (
           setIsLoop(false),
-          setVideoSource(createNewSource("projectsBack")),
+          setMainVideoSource(projectsBack),
           setTimeout(() => {
-            setVideoSource(createNewSource("idlePlanets"));
+            setMainVideoSource(idlePlanets);
             setIsLoop(true);
             setButtonVis("");
           }, 3905)
@@ -170,9 +113,9 @@ function VideoPlanets() {
       case "backToHomefromAboutUs":
         return (
           setIsLoop(false),
-          setVideoSource(createNewSource("aboutUsBack")),
+          setMainVideoSource(aboutUsBack),
           setTimeout(() => {
-            setVideoSource(createNewSource("idlePlanets"));
+            setMainVideoSource(idlePlanets);
             setIsLoop(true);
             setButtonVis("");
           }, 3905)
@@ -185,17 +128,24 @@ function VideoPlanets() {
 
   return (
     <div id="video-planets-idle">
-      {Object.keys(videoSource).map((source) => (
-        <video
-          className={`main-video ${!videoSource[source].isVisible && "d-none"}`}
-          src={videoSource[source].src}
-          loop={isLoop}
-          autoPlay
-          muted
-        />
-      ))}
+      <video
+        className="main-video"
+        src={mainVideoSource}
+        loop={isLoop}
+        autoPlay
+        muted
+      />
+      {/* <video
+        className="other-videos"
+        id="other-videos"
+        src={videoSource}
+        loop={isLoop}
+        // onEnded={handleVideoEnded}
+        autoPlay
+        muted
+      /> */}
 
-      {mainVideoSource === "solutionsIdle" && (
+      {mainVideoSource === solutionsIdle && (
         <div className="container">
           <div className="row">
             <div className="col-6">
@@ -247,7 +197,7 @@ function VideoPlanets() {
           </div>
         </div>
       )}
-      {mainVideoSource === "aidiaIdle" && (
+      {mainVideoSource === aidiaIdle && (
         <div className="container">
           <div className="row">
             <div className="col-6 align-items-center mt-4">
@@ -306,7 +256,7 @@ function VideoPlanets() {
           </div>
         </div>
       )}
-      {mainVideoSource === "projectsIdle" && (
+      {mainVideoSource === projectsIdle && (
         <div className="container">
           <div className="row">
             <div className="col-6"></div>
@@ -406,7 +356,7 @@ function VideoPlanets() {
           </div>
         </div>
       )}
-      {mainVideoSource === "aboutusIdle" && (
+      {mainVideoSource === aboutusIdle && (
         <div className="container pt-5">
           <div className="row align-items-center clearfix">
             <div className="col-6">

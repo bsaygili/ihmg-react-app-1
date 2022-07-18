@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //ccs link
 import "../css/index.css";
 //components
-import VideoPlanets from "./VideoPlanets";
+import VideoPlanets from "./VideoPlanets_1";
 
 const MainIdle = () => {
   const [isMobile, setIsMobile] = useState(false);
